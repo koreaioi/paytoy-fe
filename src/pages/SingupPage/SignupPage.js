@@ -10,6 +10,7 @@ import { checkTel, userSignup } from "../../api/AuthAPI.js";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [isTelChecked, setIsTelChecked] = useState(false);
+  // formData 세팅
   const [formData, setFormData] = useState({
     username: '',
     tel: '',
@@ -17,6 +18,7 @@ const SignupPage = () => {
     passwordConfirm: '',
   })
 
+  // 입력 값을 formData에 넣어주는 과정
   const handleData = (e) => {
     const {name, value} = e.target
 
@@ -32,6 +34,7 @@ const SignupPage = () => {
 
   const handleSubmit = async () => {
     const error = validateUser(formData);
+    // 전화번호 중복 검사를 해야 회원가입 버튼을 누를 수 있다.
     if(Object.keys(error).length > 0){
       alert(Object.values(error).join('\n'));
     } else if (!isTelChecked) {
@@ -51,6 +54,7 @@ const SignupPage = () => {
     }
   }
 
+  // 전화번호 유효 검사 관련 예외 검증 로직
   const handleDuplicateCheck = async () => {
     const {tel} = formData;
     if(!tel) {
@@ -71,6 +75,7 @@ const SignupPage = () => {
     }
   }
 
+  // 컴포넌트를 재사용하여 렌더링
   return (
     <Wrapper>
       <Title>PayToy</Title>

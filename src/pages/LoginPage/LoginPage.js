@@ -10,6 +10,7 @@ const LoginPage = () => {
   const [tel, setTel] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  // 입력값 변화를 감지하는 이벤트 함수
   const handleData = (e) => {
     if (e.target.name === "tel") {
       setTel(e.target.value);
@@ -21,21 +22,21 @@ const LoginPage = () => {
 
   const handleSubmit = async () => {
     try {
+      // 로그인을 위해 tel, password를 axios 요청 전송 
       const response = await userLogin({tel, password});
-      console.log("==========");
-      console.log(response);
-      console.log("==========");
       if (response.status === 201) {
         const sessionId = response.headers['session'];
         const userId = response.data.data.userId;
         if(sessionId){
-          localStorage.setItem('session_id', sessionId);
+          // 로그인 성공 시 백엔드에서 받은 sesion_id 값을 localStorage에 저장
+          localStorage.setItem('session_id', sessionId);  
         }
         if(userId) {
+          // 로그인 성공 시 백엔드에서 받은 userId 값을 localStorage에 저장
           localStorage.setItem('user_id', userId);
         }
         alert("로그인 성공");
-        navigate('/main');
+        navigate('/main'); // main 화면으로 이동
       } else {
         alert("로그인 실패");
       }

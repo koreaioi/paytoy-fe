@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { depositAccount } from "../../api/AccountAPI.js";
 
 const DepositPage = () => {
-  const params = useParams(); // account_id 추출 시 사용 params.id
+  //const params = useParams(); // account_id 추출 시 사용 params.id
   const navigate = useNavigate();
   const location = useLocation();
   const {accountNumber, balance} = location.state || {};
@@ -20,9 +20,10 @@ const DepositPage = () => {
   const onSubmit = async () => {
     try {
       const balaceInfo = {
-        accountNumber : accountNumber,
-        balance : depositBalance,
+        accountNumber : accountNumber, // 입금 계좌번호
+        balance : depositBalance,      // 금액
       }
+      // 백엔드로 입금할 계좌와 금액을 포함하여 전송
       const response = await depositAccount(balaceInfo);
       console.log(response);
       alert("입금되었습니다.");
@@ -36,6 +37,7 @@ const DepositPage = () => {
     navigate('/main');
   }
 
+  // 컴포넌트를 재사용하여 렌더링
   return (
     <Wrapper>
       <HeaderWrapper>
@@ -49,7 +51,7 @@ const DepositPage = () => {
             name="balance"
             placeholder="입금금액"
             type="text"
-            value={depositBalance}
+            value={depositBalance} // 입금할 금액 입력
             onChange={handleData}
           />
         </InputWrapper>
